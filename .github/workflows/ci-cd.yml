@@ -45,3 +45,5 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: "--prod"
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.next_public_supabase_url }}
