@@ -29,16 +29,37 @@ jobs:
       - name: Run TypeScript check
         run: npx tsc --noEmit
 
-  deploy:
-    name: Deploy
+  preview-deploy:
+    name: Preview Deploy
     needs: test
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to Vercel
+      - name: Deploy to Vercel (Preview)
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          github-comment: true
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.PRIVATE_SUPABASE_SERVICE_KEY }}
+
+  production-deploy:
+    name: Production Deploy
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Vercel (Production)
         uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -46,4 +67,6 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: "--prod"
         env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.next_public_supabase_url }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          PRIVATE_SUPABASE_SERVICE_KEY: ${{ secrets.PRIVATE_SUPABASE_SERVICE_KEY }}
