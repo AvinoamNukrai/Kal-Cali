@@ -6,13 +6,11 @@ In Kal-Cali app you can choose your favorite topics in finance, learn and enrich
 
 Come join us for an innovative and specially designed experience!
 
-![image](https://github.com/user-attachments/assets/d9890060-899e-4c65-9b07-c0440118df08)
+
+Join us for a fascinating tour of the app!
 
 
-
-
-
-https://github.com/user-attachments/assets/86fdcf66-7d3e-4ff1-8959-b9c45fe30a0b
+https://github.com/user-attachments/assets/75e7a75d-2c9b-490d-b86f-ab96d641d277
 
 
 
